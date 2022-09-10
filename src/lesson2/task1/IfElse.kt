@@ -4,6 +4,7 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -97,7 +98,17 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    val s1 = t1 * v1
+    val s2 = t2 * v2
+    val s3 = t3 * v3
+    val halfKilometers = (s1 + s2 + s3) / 2
+    if (s1 < halfKilometers) {
+        if (s1 + s2 < halfKilometers) {
+            return (t1 + t2 + (halfKilometers - s1 - s2) / v3)
+        } else return (t1 + (halfKilometers - s1) / v2)
+    } else return (halfKilometers / v1)
+}
 
 /**
  * Простая (2 балла)
@@ -137,7 +148,16 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+    var c = 0
+    if (rookX == kingX || rookY == kingY) {
+        c += 1
+    }
+    if (abs(kingX - bishopX) == abs(kingY - bishopY)) {
+        c += 2
+    }
+    return (c)
+}
 
 /**
  * Простая (2 балла)
@@ -148,23 +168,17 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    var C = maxOf(a, b, c)
-    var A = minOf(a, b, c)
-    var B = C - A
+    val C = maxOf(a, b, c)
+    val A = minOf(a, b, c)
+    val B = a + b + c - A - C
     if (A + B > C) {
-        if (sqr(A) + sqr(B) > sqr(C)) {
+        if (sqr(A) + sqr(B) > sqr(C)){
             return (0)
-        }
-        if (sqr(A) + sqr(B) == sqr(C)) {
+        } else if (sqr(A) + sqr(B) == sqr(C)){
             return (1)
-        }
-        if (sqr(A) + sqr(B) < sqr(C)) {
-        return (2)
-        }
-        else return (-1)
-    }
-    else return (-1)
-} /** Нужно дорешать */
+        } else return (2)
+    } else return (-1)
+}
 
 /**
  * Средняя (3 балла)
@@ -175,20 +189,15 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (c > b || a > d) {
+    if (b < c || a > d){
         return (-1)
-    }
-     else if (c <= b && b <= d) {
-        return (b - c)
-    }
-     else if (a >= c && d >= b) {
+    } else if (c < a && b <= d) {
         return (b - a)
-    }
-    else if  (c < a && d <= b) {
+    }else if (b < d) {
+        return (b - c)
+    }  else if (c < a) {
         return (d - a)
-    }
-    else if (a < c && d <= b) {
+    } else if (a < c && d < b) {
         return (d - c)
-    }
-    else return (-1)
-} /**Дорешать*/
+    } else return (-1)
+}
