@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -73,11 +74,11 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var N = n
+    var n1 = abs(n)
     var c = 1
-    while (N > 9) {
+    while (n1 > 9) {
         c += 1
-        N /= 10
+        n1 /= 10
     }
     return (c)
 }
@@ -122,7 +123,7 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var c = 0
-    for (i in 1..n - 1) {
+    for (i in 1 until n) {
         if (n % i == 0) c = i
     }
     return (c)
@@ -144,7 +145,18 @@ fun maxDivisor(n: Int): Int {
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var a = x
+    var n = 0
+    while (a != 1) {
+        if (a % 2 == 0) {
+            a /= 2
+            n++
+        } else a = a * 3 + 1
+        n++
+    }
+    return (n)
+}
 
 /**
  * Средняя (3 балла)

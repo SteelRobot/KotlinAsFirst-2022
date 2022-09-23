@@ -4,6 +4,8 @@ package lesson2.task2
 
 import lesson1.task1.sqr
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Пример
@@ -44,11 +46,14 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    if (month == 2 && year % 4 == 0 && year % 100 != 0 || year % 400 == 0) return (29)
-    else if (month == 2) return (28)
-    else if (month == 8) return (31)
-    else if (month % 2 == 1) return (31)
-    else return (30)
+    return when {
+        month == 2 && year % 4 == 0 && year % 100 != 0 || year % 400 == 0 -> 29
+        month == 2 -> 28
+        month == 8 -> 31
+        month < 9 && month % 2 == 1 -> 31
+        month > 9 && month % 2 == 0 -> 31
+        else -> 30
+    }
 }
 
 /**
@@ -73,9 +78,8 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    if (a >= r) return (b >= s || c >= s)
-    else if (a >= s) return (b >= r || c >= r)
-    else if (c >= s) return (b >= r)
-    else if (c >= r) return (b >= s)
-    else return false
+    val C = maxOf(a, b, c)
+    val A = minOf(a, b, c)
+    val B = a + b + c - A - C
+    return A <= min(r,s) && B <= max(r,s)
 }
