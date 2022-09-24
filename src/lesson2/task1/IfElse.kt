@@ -98,10 +98,13 @@ fun timeForHalfWay(
     val s2 = t2 * v2
     val s3 = t3 * v3
     val halfKilometers = (s1 + s2 + s3) / 2
-    if (s1 < halfKilometers) {
-        return if (s1 + s2 < halfKilometers) (t1 + t2 + (halfKilometers - s1 - s2) / v3)
-        else (t1 + (halfKilometers - s1) / v2)
-    } else return (halfKilometers / v1)
+    return when {
+        (s1 < halfKilometers) -> return when {
+            s1 + s2 < halfKilometers -> t1 + t2 + (halfKilometers - s1 - s2) / v3
+            else -> t1 + (halfKilometers - s1) / v2
+        }
+        else -> halfKilometers / v1
+    }
 }
 
 /**
