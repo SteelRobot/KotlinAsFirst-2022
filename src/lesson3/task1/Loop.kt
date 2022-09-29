@@ -213,7 +213,24 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    val len = digitNumber(n)
+    var tenExponent1 = 1
+    var tenExponent2 = 1
+    var sum = 0
+    for (i in len downTo 1) {
+        for (m in 1..i) {
+            tenExponent1 *= 10
+        }
+        for (m in 1..len - i) {
+            tenExponent2 *= 10
+        }
+        sum += n % tenExponent1 / (tenExponent1 / 10) * tenExponent2
+        tenExponent1 = 1
+        tenExponent2 = 1
+    }
+    return sum
+}
 
 /**
  * Средняя (3 балла)
