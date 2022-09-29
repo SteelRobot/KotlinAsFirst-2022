@@ -80,6 +80,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
     val versh = vershoks * 4.445
     return (sag + arsh + versh) / 100
 }
+
 /**
  * Тривиальная (1 балл)
  *
@@ -99,7 +100,11 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
+    val x = sqr(x1 - x2)
+    val y = sqr(y1 - y2)
+    return sqrt(x + y)
+}
 
 /**
  * Простая (2 балла)
@@ -130,7 +135,9 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    return initial * ((100 + percent.toDouble()) / 100).pow(3)
+    val percentAdded = ((100 + percent.toDouble()) / 100).pow(3)
+    val total = initial * percentAdded
+    return total
 }
 
 /**
@@ -140,5 +147,8 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int {
-    return number % 10 * 100 + number / 10 % 10 * 10 + number / 100
+    val first = number % 10
+    val second = number / 10 % 10
+    val third = number / 100
+    return first * 100 + second * 10 + third
 }

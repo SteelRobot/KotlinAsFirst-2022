@@ -72,14 +72,12 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    return when {
-        age % 100 in 11..20 -> "$age лет"
-        age % 10 >= 5 || age % 10 == 0 -> "$age лет"
-        age == 1 || age % 10 == 1 -> "$age год"
-        age % 10 in 2..4 -> "$age года"
-        else -> throw Exception("Неверный год")
-    }
+fun ageDescription(age: Int): String = when {
+    age % 100 in 11..20 -> "$age лет"
+    age % 10 >= 5 || age % 10 == 0 -> "$age лет"
+    age == 1 || age % 10 == 1 -> "$age год"
+    age % 10 in 2..4 -> "$age года"
+    else -> throw Exception("Неверный год")
 }
 
 /**
@@ -124,7 +122,7 @@ fun whichRookThreatens(
     var c = 0
     if (rookX1 == kingX || rookY1 == kingY) c += 1
     if (rookX2 == kingX || rookY2 == kingY) c += 2
-    return (c)
+    return c
 }
 
 /**
@@ -145,7 +143,7 @@ fun rookOrBishopThreatens(
     var c = 0
     if (rookX == kingX || rookY == kingY) c += 1
     if (abs(kingX - bishopX) == abs(kingY - bishopY)) c += 2
-    return (c)
+    return c
 }
 
 /**
@@ -163,8 +161,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     if (a1 + b1 > c1) {
         return if (sqr(a1) + sqr(b1) > sqr(c1)) (0)
         else if (sqr(a1) + sqr(b1) == sqr(c1)) (1)
-        else (2)
-    } else return (-1)
+        else 2
+    } else return -1
 }
 
 /**
@@ -176,12 +174,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-   return when {
-        (b < c || a > d) -> -1
+    return when {
+        b < c || a > d -> -1
         c < a && b <= d -> b - a
         b <= d -> b - c
         c <= a -> d - a
         a < c -> d - c
-        else -> (-1)
+        else -> -1
     }
 }

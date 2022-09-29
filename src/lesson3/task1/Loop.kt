@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -82,7 +83,7 @@ fun digitNumber(n: Int): Int {
         c += 1
         n1 /= 10
     }
-    return (c)
+    return c
 }
 
 /**
@@ -103,7 +104,7 @@ fun fib(n: Int): Int {
         b = ab
         c += 1
     }
-    return (ab)
+    return ab
 }
 
 /**
@@ -112,11 +113,15 @@ fun fib(n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var i = 2
-    while (n % i != 0) {
-        i += 1
+    var count = 0
+    for (i in 2..sqrt(n.toDouble()).toInt() + 1) {
+        if (n % i == 0) {
+            count = i
+            break
+        }
     }
-    return (i)
+    return if (count == 0) n
+    else count
 }
 
 /**
@@ -129,7 +134,7 @@ fun maxDivisor(n: Int): Int {
     for (i in 1 until n) {
         if (n % i == 0) c = i
     }
-    return (c)
+    return c
 }
 
 /**
@@ -160,7 +165,7 @@ fun collatzSteps(x: Int): Int {
             n++
         }
     }
-    return (n)
+    return n
 }
 
 /**
@@ -171,16 +176,17 @@ fun collatzSteps(x: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var number = 0
-    var i = 0
-    while (number == 0) {
-        i++
+    for (i in max(n,m)..n * m) {
         if (i % m == 0 && i % n == 0) {
             number = i
-            println(i)
             break
         }
     }
-    return (number)
+    return when {
+        n == m -> n
+        number == 0 -> n * m
+        else -> number
+    }
 }
 
 /**
