@@ -3,10 +3,7 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -174,20 +171,7 @@ fun collatzSteps(x: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    var number = 0
-    for (i in max(n,m)..n * m) {
-        if (i % m == 0 && i % n == 0) {
-            number = i
-            break
-        }
-    }
-    return when {
-        n == m -> n
-        number == 0 -> n * m
-        else -> number
-    }
-}
+fun lcm(m: Int, n: Int): Int = TODO()
 
 /**
  * Средняя (3 балла)
@@ -284,7 +268,24 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var count = 0
+    var i = 0
+    var a = 0
+    while (count != n) {
+        i++
+        a = sqr(i)
+        for (m in digitNumber(a) downTo 1) {
+            count++
+            if (count == n) {
+                return (a / (10.0).pow(digitNumber(a) - 1)).toInt()
+            }
+            a = (a % (10.0).pow(digitNumber(a) - 1)).toInt()
+        }
+        if (count >= n) break
+    }
+    return a
+}
 
 /**
  * Сложная (5 баллов)
@@ -295,4 +296,21 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var count = 0
+    var i = 0
+    var a = 0
+    while (count != n) {
+        i++
+        a = fib(i)
+        for (m in digitNumber(a) downTo 1) {
+            count++
+            if (count == n) {
+                return (a / (10.0).pow(digitNumber(a) - 1)).toInt()
+            }
+            a = (a % (10.0).pow(digitNumber(a) - 1)).toInt()
+        }
+        if (count >= n) break
+    }
+    return a
+}
