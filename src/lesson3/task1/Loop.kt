@@ -273,23 +273,20 @@ fun cos(x: Double, eps: Double): Double = TODO()
 fun squareSequenceDigit(n: Int): Int {
     var count = 0
     var i = 0
-    var a = 0
+    var a: Int
+    var b = 0
     while (count != n) {
         i++
         a = sqr(i)
         for (m in digitNumber(a) downTo 1) {
             count++
-            if (count == n - 1 && a > 10) {
-                if ((a / (10.0).pow(digitNumber(a) - 2) % 10).toInt() == 0) return 0
-            }
-            if (count == n) {
-                return (a / (10.0).pow(digitNumber(a) - 1)).toInt()
-            }
-            a = (a % (10.0).pow(digitNumber(a) - 1)).toInt()
+            if (a < 10 && count == n) return a
+            b = (a / 10.0.pow(m - 1) % 10).toInt()
+            if (count >= n) break
         }
         if (count >= n) break
     }
-    return a
+    return b
 }
 
 /**
@@ -304,21 +301,18 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var count = 0
     var i = 0
-    var a = 0
+    var a: Int
+    var b = 0
     while (count != n) {
         i++
         a = fib(i)
         for (m in digitNumber(a) downTo 1) {
             count++
-            if (count == n - 1 && a > 10) {
-                if ((a / (10.0).pow(digitNumber(a) - 2) % 10).toInt() == 0) return 0
-            }
-            if (count == n) {
-                return (a / (10.0).pow(digitNumber(a) - 1)).toInt()
-            }
-            a = (a % (10.0).pow(digitNumber(a) - 1)).toInt()
+            if (a < 10 && count == n) return a
+            b = (a / 10.0.pow(m - 1) % 10).toInt()
+            if (count >= n) break
         }
         if (count >= n) break
     }
-    return a
+    return b
 }
