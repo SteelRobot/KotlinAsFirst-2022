@@ -280,10 +280,13 @@ fun squareSequenceDigit(n: Int): Int {
         for (m in digitNumber(a) downTo 1) {
             count++
             if (a < 10 && count == n) return a
-            b = (a / 10.0.pow(m - 1) % 10).toInt()
+            if (count + digitNumber(a) >= n) {
+                for (k in n until count + digitNumber(a)) {
+                    b = (a / 10.0.pow(m - 1) % 10).toInt()
+                }
+            }
             if (count >= n) break
         }
-        if (count >= n) break
     }
     return b
 }
@@ -308,10 +311,13 @@ fun fibSequenceDigit(n: Int): Int {
         for (m in digitNumber(a) downTo 1) {
             count++
             if (a < 10 && count == n) return a
-            b = (a / 10.0.pow(m - 1) % 10).toInt()
+            if (count + digitNumber(a) >= n) {
+                for (k in n until count + digitNumber(a)) {
+                    b = (a / 10.0.pow(m - 1) % 10).toInt()
+                }
+            }
             if (count >= n) break
         }
-        if (count >= n) break
     }
     return b
 }
