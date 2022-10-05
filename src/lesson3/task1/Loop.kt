@@ -96,7 +96,7 @@ fun fib(n: Int): Int {
     var a = 0
     var b = 1
     var ab = 0
-    if (n in 1..2) return (1)
+    if (n in 1..2) return 1
     while (c < n - 1) {
         ab = a + b
         a = b
@@ -112,15 +112,12 @@ fun fib(n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var count = 0
     for (i in 2..sqrt(n.toDouble()).toInt() + 1) {
         if (n % i == 0) {
-            count = i
-            break
+            return i
         }
     }
-    return if (count == 0) n
-    else count
+    return n
 }
 
 /**
@@ -130,8 +127,11 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var c = 0
-    for (i in 1 until n) {
-        if (n % i == 0) c = i
+    for (i in n - 1 downTo 1) {
+        if (n % i == 0) {
+            c = i
+            break
+        }
     }
     return c
 }
@@ -158,11 +158,10 @@ fun collatzSteps(x: Int): Int {
     while (a != 1) {
         if (a % 2 == 0) {
             a /= 2
-            n++
         } else if (a % 2 == 1) {
             a = a * 3 + 1
-            n++
         }
+        n++
     }
     return n
 }
@@ -183,10 +182,10 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    for (i1 in 2..m) {
-        if (m % i1 == 0) {
-            for (i2 in 2..i1)
-                if (n % i2 == 0 && i1 == i2) return false
+    if (n % m == 0) return false
+    for (i1 in 2..sqrt(m.toDouble()).toInt() + 1) {
+        if (n % i1 == 0) {
+            if (m % i1 == 0) return false
         }
     }
     return true

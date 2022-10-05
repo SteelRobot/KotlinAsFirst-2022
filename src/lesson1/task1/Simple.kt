@@ -136,8 +136,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
     val percentAdded = ((100 + percent.toDouble()) / 100).pow(3)
-    val total = initial * percentAdded
-    return total
+    return initial * percentAdded
 }
 
 /**

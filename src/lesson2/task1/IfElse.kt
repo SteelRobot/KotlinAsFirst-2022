@@ -4,10 +4,8 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
-import java.lang.IllegalArgumentException
 import kotlin.math.abs
 import kotlin.math.max
-import kotlin.math.min
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -97,7 +95,7 @@ fun timeForHalfWay(
     val s3 = t3 * v3
     val halfKilometers = (s1 + s2 + s3) / 2
     return when {
-        (s1 < halfKilometers) -> return when {
+        s1 < halfKilometers -> when {
             s1 + s2 < halfKilometers -> t1 + t2 + (halfKilometers - s1 - s2) / v3
             else -> t1 + (halfKilometers - s1) / v2
         }
@@ -158,12 +156,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val c1 = maxOf(a, b, c)
     val a1 = minOf(a, b, c)
     val b1 = a + b + c - a1 - c1
-    when {
-        a1 + b1 > c1 -> return when {
-            (sqr(a1) + sqr(b1) > sqr(c1)) -> 0
-            sqr(a1) + sqr(b1) == sqr(c1) -> 1
-            else -> 2
-        }
+    if (a1 + b1 > c1) return when {
+        (sqr(a1) + sqr(b1) > sqr(c1)) -> 0
+        sqr(a1) + sqr(b1) == sqr(c1) -> 1
+        else -> 2
     }
     return -1
 }
@@ -176,13 +172,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return when {
-        b < c || a > d -> -1
-        c < a && b <= d -> b - a
-        b <= d -> b - c
-        c <= a -> d - a
-        a < c -> d - c
-        else -> -1
-    }
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
+    b < c || a > d -> -1
+    c < a && b <= d -> b - a
+    b <= d -> b - c
+    c <= a -> d - a
+    a < c -> d - c
+    else -> -1
 }

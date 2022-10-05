@@ -34,8 +34,10 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    return x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y1 - y2)
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
+    x1 == x2 || y1 == y2 -> true
+    abs(x1 - x2) == abs(y1 - y2) -> true
+    else -> false
 }
 
 
@@ -81,5 +83,5 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val maxLength = maxOf(a, b, c)
     val minLength = minOf(a, b, c)
     val middleLength = a + b + c - minLength - maxLength
-    return minLength <= min(r,s) && middleLength <= max(r,s)
+    return minLength <= min(r, s) && middleLength <= max(r, s)
 }
