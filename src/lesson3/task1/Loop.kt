@@ -126,8 +126,8 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var c = 0
-    for (i in n - 1 downTo 1) {
+    var c = 1
+    for (i in n - 1 downTo sqrt(n.toDouble()).toInt()) {
         if (n % i == 0) {
             c = i
             break
@@ -182,14 +182,13 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
+    var a = 0
     if (n == 1 || m == 1) return true
     if (n % m == 0) return false
-    for (i1 in 2..sqrt(m.toDouble()).toInt() + 1) {
-        if (n % i1 == 0) {
-            if (m % i1 == 0) return false
-        }
+    for (i1 in 1..sqrt(m.toDouble()).toInt()) {
+        if (n % i1 == 0 && m % i1 == 0) a = i1
     }
-    return true
+    return a == 1
 }
 
 /**
@@ -201,19 +200,9 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun revert(n: Int): Int {
     val len = digitNumber(n)
-    var tenExponent1 = 1
-    var tenExponent2 = 1
     var sum = 0
     for (i in len downTo 1) {
-        for (m in 1..i) {
-            tenExponent1 *= 10
-        }
-        for (m in 1..len - i) {
-            tenExponent2 *= 10
-        }
-        sum += n % tenExponent1 / (tenExponent1 / 10) * tenExponent2
-        tenExponent1 = 1
-        tenExponent2 = 1
+        sum += n % (10.0.pow(i)).toInt() / ((10.0.pow(i)).toInt() / 10) * (10.0.pow(len - i)).toInt()
     }
     return sum
 }
@@ -282,9 +271,7 @@ fun squareSequenceDigit(n: Int): Int {
             count++
             if (a < 10 && count == n) return a
             if (count + digitNumber(a) >= n) {
-                for (k in n until count + digitNumber(a)) {
-                    b = (a / 10.0.pow(m - 1) % 10).toInt()
-                }
+                b = (a / 10.0.pow(m - 1) % 10).toInt()
             }
             if (count >= n) break
         }
@@ -313,9 +300,7 @@ fun fibSequenceDigit(n: Int): Int {
             count++
             if (a < 10 && count == n) return a
             if (count + digitNumber(a) >= n) {
-                for (k in n until count + digitNumber(a)) {
-                    b = (a / 10.0.pow(m - 1) % 10).toInt()
-                }
+                b = (a / 10.0.pow(m - 1) % 10).toInt()
             }
             if (count >= n) break
         }

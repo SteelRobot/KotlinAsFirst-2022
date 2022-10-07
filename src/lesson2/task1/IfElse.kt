@@ -157,7 +157,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val a1 = minOf(a, b, c)
     val b1 = a + b + c - a1 - c1
     if (a1 + b1 > c1) return when {
-        (sqr(a1) + sqr(b1) > sqr(c1)) -> 0
+        sqr(a1) + sqr(b1) > sqr(c1) -> 0
         sqr(a1) + sqr(b1) == sqr(c1) -> 1
         else -> 2
     }
