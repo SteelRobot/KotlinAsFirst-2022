@@ -263,10 +263,15 @@ fun convert(n: Int, base: Int): List<Int> {
         res.add(n)
         return res
     }
-    while (a > base) {
+    while (a > 0) {
+        println("a = $a, list = $list")
+        if (a == base) {
+            list.add(0)
+            list.add(1)
+            break
+        }
         list.add(a % base)
         a /= base
-        if (a < base && a != 0) list.add(a)
     }
     for (i in list.size - 1 downTo 0) {
         res.add(list[i])
