@@ -212,6 +212,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     var minimum = 1000.0
     var res: String? = null
     if (kind.isEmpty()) return ""
+    if (kind == "") return null
     for ((name, info) in stuff) {
         val type = info.first
         val price = info.second
