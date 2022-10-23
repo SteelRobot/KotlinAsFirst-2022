@@ -139,8 +139,12 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
+    val list = mutableListOf<String>()
     for ((key, value) in a) {
-        if (value == b[key]) a.remove(key)
+        if (value == b[key]) list.add(key)
+    }
+    for (elements in list) {
+        a.remove(elements)
     }
 }
 
