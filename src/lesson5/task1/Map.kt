@@ -118,6 +118,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
     if (a.isEmpty()) return true
+    if (a.size > b.size) return false
     for ((key, value) in a) {
         if (value == b[key]) return true
     }
@@ -221,7 +222,10 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
         if (type == kind && price < minimum) {
             minimum = price
             res = name
-        } else if (res.isNullOrBlank() && type == kind) res = name
+        } else if (res.isNullOrBlank() && type == kind && minimum == 10000.0) {
+            res = name
+            println(res)
+        }
     }
     return res
 }
