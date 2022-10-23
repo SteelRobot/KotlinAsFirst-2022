@@ -4,6 +4,7 @@ package lesson3.task1
 
 import lesson1.task1.sqr
 import kotlin.math.abs
+import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -126,14 +127,10 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var c = 1
-    for (i in n - 1 downTo sqrt(n.toDouble()).toInt()) {
-        if (n % i == 0) {
-            c = i
-            break
-        }
+    for (i in 2..sqrt(n.toDouble()).toInt() + 1) {
+        if (n % i == 0) return n / i
     }
-    return c
+    return 1
 }
 
 /**
@@ -182,13 +179,14 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var a = 0
-    if (n == 1 || m == 1) return true
-    if (n % m == 0) return false
-    for (i1 in 1..sqrt(m.toDouble()).toInt()) {
-        if (n % i1 == 0 && m % i1 == 0) a = i1
+    var a = m
+    var b = n
+    while (a != 0 && b != 0) {
+        if (a > b) a -= b
+        else b -= a
     }
-    return a == 1
+
+    return max(a, b) == 1
 }
 
 /**
@@ -199,10 +197,15 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    val len = digitNumber(n)
+    var a = n
+    var digit: Int
     var sum = 0
-    for (i in len downTo 1) {
-        sum += n % (10.0.pow(i)).toInt() / ((10.0.pow(i)).toInt() / 10) * (10.0.pow(len - i)).toInt()
+    while (a > 0) {
+        digit = a % 10
+        a /= 10
+        sum *= 10
+        sum += digit
+
     }
     return sum
 }
@@ -262,11 +265,10 @@ fun cos(x: Double, eps: Double): Double = TODO()
 fun squareSequenceDigit(n: Int): Int {
     var count = 0
     var i = 0
-    var a: Int
     var b = 0
     while (count != n) {
         i++
-        a = sqr(i)
+        val a = sqr(i)
         for (m in digitNumber(a) downTo 1) {
             count++
             if (a < 10 && count == n) return a
@@ -291,11 +293,10 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var count = 0
     var i = 0
-    var a: Int
     var b = 0
     while (count != n) {
         i++
-        a = fib(i)
+        val a = fib(i)
         for (m in digitNumber(a) downTo 1) {
             count++
             if (a < 10 && count == n) return a
