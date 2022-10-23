@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+import java.time.Month
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +77,29 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    if (parts.size < 2) return ""
+    val month = when (parts[1]) {
+        "января" -> 1
+        "февраля" -> 2
+        "марта" -> 3
+        "апреля" -> 4
+        "мая" -> 5
+        "июня" -> 6
+        "июля" -> 7
+        "августа" -> 8
+        "сентября" -> 9
+        "октября" -> 10
+        "ноября" -> 11
+        "декабря" -> 12
+        else -> return ""
+    }
+    if (parts[0].toInt() < 0 || parts[0].toInt() > daysInMonth(month, parts[2].toInt())) return ""
+    val day = parts[0].toInt()
+    val year = parts[2].toInt()
+    return String.format("%02d.%02d.%02d", day, month, year)
+}
 
 /**
  * Средняя (4 балла)
@@ -86,7 +111,29 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    if (parts.size != 3) return ""
+    val month = when (parts[1]) {
+        "01" -> "января"
+        "02" -> "февраля"
+        "03" -> "марта"
+        "04" -> "апреля"
+        "05" -> "мая"
+        "06" -> "июня"
+        "07" -> "июля"
+        "08" -> "августа"
+        "09" -> "сентября"
+        "10" -> "октября"
+        "11" -> "ноября"
+        "12" -> "декабря"
+        else -> return ""
+    }
+    if (parts[0].toInt() < 0 || parts[0].toInt() > daysInMonth(parts[1].toInt(), parts[2].toInt())) return ""
+    val day = parts[0].toInt()
+    val year = parts[2].toInt()
+    return ("$day $month $year").toString()
+}
 
 /**
  * Средняя (4 балла)
@@ -102,7 +149,17 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val allowedSymbols = setOf<Int>(32, 40, 41, 43, 45)
+    var res = ""
+    if (phone.startsWith("+")) res += "+"
+    if (phone.contains("()")) return ""
+    for (i in phone.indices) {
+        if (phone[i].code in 48..57) res += phone[i]
+        else if (!allowedSymbols.contains(phone[i].code)) return ""
+    }
+    return res
+}
 
 /**
  * Средняя (5 баллов)
@@ -114,7 +171,18 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val allowedSymbols = setOf<String>(" ", "-", "%")
+    var best = 0
+    val part = jumps.split(" ")
+    for (i in part.indices) {
+        val a = part[i]
+        if (!allowedSymbols.containsAll(listOf(a)) && a.toDoubleOrNull() == null) return -1
+        if (a.toDoubleOrNull() != null && a.toInt() > best) best = a.toInt()
+    }
+    return if (best != 0) best
+    else -1
+}
 
 /**
  * Сложная (6 баллов)
