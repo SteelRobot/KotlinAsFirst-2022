@@ -269,14 +269,12 @@ fun squareSequenceDigit(n: Int): Int {
     while (count != n) {
         i++
         val a = sqr(i)
-        for (m in digitNumber(a) downTo 1) {
-            count++
-            if (a < 10 && count == n) return a
-            if (count + digitNumber(a) >= n) {
-                b = (a / 10.0.pow(m - 1) % 10).toInt()
-            }
-            if (count >= n) break
+        count += digitNumber(a)
+        if (a < 10 && count == n) return a
+        if (count + digitNumber(a) >= n) {
+            b = (a / 10.0.pow(count - n) % 10).toInt()
         }
+        if (count > n) break
     }
     return b
 }
@@ -297,14 +295,12 @@ fun fibSequenceDigit(n: Int): Int {
     while (count != n) {
         i++
         val a = fib(i)
-        for (m in digitNumber(a) downTo 1) {
-            count++
-            if (a < 10 && count == n) return a
-            if (count + digitNumber(a) >= n) {
-                b = (a / 10.0.pow(m - 1) % 10).toInt()
-            }
-            if (count >= n) break
+        count += digitNumber(a)
+        if (a < 10 && count == n) return a
+        if (count + digitNumber(a) >= n) {
+            b = (a / 10.0.pow(count - n) % 10).toInt()
         }
+        if (count > n) break
     }
     return b
 }
