@@ -196,7 +196,6 @@ fun bestLongJump(jumps: String): Int {
  * вернуть -1.
  */
 fun bestHighJump(jumps: String): Int = TODO()
-
 /**
  * Сложная (6 баллов)
  *
