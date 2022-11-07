@@ -327,12 +327,19 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     val sortedList = list.sorted()
     var end = list.size - 1
     var start = 0
+    var res1 = 0
+    var res2 = 0
     while (start < end) {
-        if (sortedList[start] + sortedList[end] == number) return Pair(start, end)
+        if (sortedList[start] + sortedList[end] == number) break
         else if (sortedList[start] + sortedList[end] < number) start++
         else if (sortedList[start] + sortedList[end] > number) end--
-
     }
+    for (i in list.indices)
+        if (list[i] == sortedList[start]) res1 = i
+    for (i in list.indices)
+        if (list[i] == sortedList[end]) {
+            if (res1 != i) return Pair(res1, i)
+        }
     return Pair(-1, -1)
 }
 
