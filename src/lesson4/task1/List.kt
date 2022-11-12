@@ -337,7 +337,7 @@ fun decimalFromString(str: String, base: Int): Int {
     var count = 9
     val list = mutableListOf<Int>()
     for (i in str.indices) {
-        if (str[i].code - 48 > 9) {
+        if (str[i] in 'a'..'z') {
             for (c in 'a'..'z') {
                 count++
                 if (str[i] == c) list.add(count)

@@ -4,7 +4,21 @@ package lesson6.task1
 
 import lesson2.task2.daysInMonth
 import java.lang.IllegalArgumentException
-import java.time.Month
+
+val months = listOf(
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октрября",
+    "ноября",
+    "декабря"
+)
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -81,21 +95,10 @@ fun main() {
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     if (parts.size < 2) return ""
-    val month = when (parts[1]) {
-        "января" -> 1
-        "февраля" -> 2
-        "марта" -> 3
-        "апреля" -> 4
-        "мая" -> 5
-        "июня" -> 6
-        "июля" -> 7
-        "августа" -> 8
-        "сентября" -> 9
-        "октября" -> 10
-        "ноября" -> 11
-        "декабря" -> 12
-        else -> return ""
+    if (!months.contains(parts[1])) {
+        return ""
     }
+    val month = months.indexOf(parts[1]) + 1
     if (parts[0].toInt() < 0 || parts[0].toInt() > daysInMonth(month, parts[2].toInt())) return ""
     val day = parts[0].toInt()
     val year = parts[2].toInt()
@@ -115,21 +118,8 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
     if (parts.size != 3) return ""
-    val month = when (parts[1]) {
-        "01" -> "января"
-        "02" -> "февраля"
-        "03" -> "марта"
-        "04" -> "апреля"
-        "05" -> "мая"
-        "06" -> "июня"
-        "07" -> "июля"
-        "08" -> "августа"
-        "09" -> "сентября"
-        "10" -> "октября"
-        "11" -> "ноября"
-        "12" -> "декабря"
-        else -> return ""
-    }
+    if (parts[1].toIntOrNull() !in 1..12) return ""
+    val month = months[parts[1].toInt() - 1]
     if (parts[0].toInt() < 0 || parts[0].toInt() > daysInMonth(parts[1].toInt(), parts[2].toInt())) return ""
     val day = parts[0].toInt()
     val year = parts[2].toInt()
@@ -151,13 +141,13 @@ fun dateDigitToStr(digital: String): String {
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String {
-    val allowedSymbols = setOf<Int>(32, 40, 41, 43, 45)
+    val allowedSymbols = setOf(" ", "(", ")", "-", "+")
     var res = ""
     if (phone.startsWith("+")) res += "+"
     if (phone.contains("()")) return ""
     for (i in phone.indices) {
-        if (phone[i].code in 48..57) res += phone[i]
-        else if (!allowedSymbols.contains(phone[i].code)) return ""
+        if (phone[i].digitToIntOrNull() in 0..9) res += phone[i]
+        else if (phone[i].toString() !in allowedSymbols) return ""
     }
     return res
 }
@@ -173,7 +163,7 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    val allowedSymbols = setOf<String>(" ", "-", "%")
+    val allowedSymbols = setOf(" ", "-", "%")
     var best = 0
     val part = jumps.split(" ")
     for (i in part.indices) {
