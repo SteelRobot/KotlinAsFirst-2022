@@ -220,7 +220,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     for ((name, info) in stuff) {
         val type = info.first
         val price = info.second
-        if (type == kind && price < minimum) {
+        if (type == kind && price <= minimum) {
             minimum = price
             res = name
         }
