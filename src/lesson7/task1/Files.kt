@@ -63,9 +63,15 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    for (line in File(inputName).readLines()) {
+        if (!line.startsWith("_")) {
+            writer.write(line)
+            writer.newLine()
+        }
+    }
+    writer.close()
 }
-
 /**
  * Средняя (14 баллов)
  *
@@ -75,7 +81,24 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val stringCount = mutableMapOf<String, Int>()
+    for (elements in substrings) {
+        var count = 0
+        for (line in File(inputName).readLines()) {
+            var start = 0
+            while (start < line.length) {
+                val foundIndex = line.indexOf(elements, start, ignoreCase = true)
+                if (foundIndex != -1) {
+                    start = foundIndex + 1
+                    count++
+                } else break
+            }
+            stringCount += Pair(elements, count)
+        }
+    }
+    return stringCount
+}
 
 
 /**
@@ -113,7 +136,18 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    var maxLength = 0
+    for (line in File(inputName).readLines()) {
+        if (line.length > maxLength) maxLength = line.length
+    }
+    for (line in File(inputName).readLines()) {
+        var newLine = line.replace("""^ +""".toRegex(), "")
+        newLine = " ".repeat((maxLength - newLine.length) / 2) + newLine
+        writer.write(newLine)
+        writer.newLine()
+    }
+    writer.close()
 }
 
 /**
@@ -449,6 +483,6 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+
 }
 
