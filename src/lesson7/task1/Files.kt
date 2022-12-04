@@ -139,19 +139,14 @@ fun centerFile(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
     var maxLength = 0
     for (line in File(inputName).readLines()) {
-        if (line.length > maxLength) maxLength = line.length
+        val newLine = line.replace("""(^ +)|(\s+${'$'})""".toRegex(), "")
+        if (newLine.length > maxLength) maxLength = newLine.length
     }
     for (line in File(inputName).readLines()) {
-        if (line.length == maxLength) {
-            val newLine = line.replace("""\s+${'$'}""".toRegex(), "")
-            writer.write(newLine)
-            writer.newLine()
-        } else {
-            var newLine = line.replace("""(^ +)|(\s+${'$'})""".toRegex(), "")
-            newLine = " ".repeat((maxLength - newLine.length) / 2) + newLine
-            writer.write(newLine)
-            writer.newLine()
-        }
+        var newLine = line.replace("""(^ +)|(\s+${'$'})""".toRegex(), "")
+        newLine = " ".repeat((maxLength - newLine.length) / 2) + newLine
+        writer.write(newLine)
+        writer.newLine()
     }
     writer.close()
 }
