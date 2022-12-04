@@ -143,7 +143,7 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     val allowedSymbols = setOf(" ", "(", ")", "-", "+")
     var res = ""
-    if (phone.startsWith("+")) res += "+"
+    if (phone.startsWith("+") && phone.length > 1) res += "+"
     if (phone.contains("()")) return ""
     for (i in phone.indices) {
         if (phone[i].digitToIntOrNull() in 0..9) res += phone[i]
