@@ -142,7 +142,7 @@ fun centerFile(inputName: String, outputName: String) {
         if (line.length > maxLength) maxLength = line.length
     }
     for (line in File(inputName).readLines()) {
-        var newLine = line.replace("""^ +""".toRegex(), "")
+        var newLine = line.replace("""(^ +)|(\s+${'$'})""".toRegex(), "")
         newLine = " ".repeat((maxLength - newLine.length) / 2) + newLine
         writer.write(newLine)
         writer.newLine()
@@ -483,6 +483,6 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-
+    TODO()
 }
 
