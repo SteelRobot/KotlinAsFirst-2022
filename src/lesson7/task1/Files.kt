@@ -317,7 +317,37 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    TODO()
+    fun replaceAsterisks(line: String): String =
+        line.replace("""(?<=\w)\*{3}""".toRegex(), "</b></i>")
+            .replace("""\*{3}(?=\w)""".toRegex(), "<b><i>")
+            .replace("""(?<=\w)\*{2}""".toRegex(), "</b>")
+            .replace("""\*{2}(?=\w)""".toRegex(), "<b>")
+            .replace("""(?<=\w)\*""".toRegex(), "</i>")
+            .replace("""\*(?=\w)""".toRegex(), "<i>")
+            .replace("""(?<=\w|>)~{2}""".toRegex(), "</s>")
+            .replace("""~{2}(?=\w|<)""".toRegex(), "<s>")
+
+    val writer = File(outputName).bufferedWriter()
+    writer.write(
+        "<html>" +
+                "<body>" +
+                "<p>"
+    )
+    for (line in File(inputName).readLines()) {
+        if (line.matches("""(?<=^) +(?=${'$'})|""".toRegex())) {
+            writer.write(
+                "</p>" +
+                        "<p>"
+            )
+        }
+        writer.write(replaceAsterisks(line))
+    }
+    writer.write(
+        "</p>" +
+                "</body>" +
+                "</html>"
+    )
+    writer.close()
 }
 
 /**
