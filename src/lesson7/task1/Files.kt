@@ -317,32 +317,7 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    fun replaceAsterisks(line: String): String =
-        line.replace("""\*{2}((.)+?)\*{2}""".toRegex(), "<b>$1</b>")
-            .replace("""\*((.)+?)\*""".toRegex(), "<i>$1</i>")
-            .replace("""~~((.)+?)~~""".toRegex(), "<s>$1</s>")
-
-    File(outputName).bufferedWriter().use {
-        it.write(
-            "<html>" +
-                    "<body>" +
-                    "<p>"
-        )
-        for (line in File(inputName).readLines()) {
-            if (line.matches("""(?<=^) +(?=${'$'})|""".toRegex())) {
-                it.write(
-                    "</p>" +
-                            "<p>"
-                )
-            }
-            it.write(replaceAsterisks(line))
-        }
-        it.write(
-            "</p>" +
-                    "</body>" +
-                    "</html>"
-        )
-    }
+    TODO()
 }
 
 /**
