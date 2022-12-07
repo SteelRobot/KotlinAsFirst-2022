@@ -141,13 +141,13 @@ fun dateDigitToStr(digital: String): String {
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String {
-    val allowedSymbols = setOf(" ", "(", ")", "-", "+")
+    val allowedSymbols = setOf(' ', '(', ')', '-', '+')
     var res = ""
     if (phone.startsWith("+") && phone.length > 1) res += "+"
     if (phone.contains("()")) return ""
     for (i in phone.indices) {
         if (phone[i].digitToIntOrNull() in 0..9) res += phone[i]
-        else if (phone[i].toString() !in allowedSymbols) return ""
+        else if (phone[i] !in allowedSymbols) return ""
     }
     return res
 }
@@ -163,12 +163,12 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    val allowedSymbols = setOf(" ", "-", "%")
+    val allowedSymbols = setOf(' ', '-', '%')
     var best = 0
     val part = jumps.split(" ")
     for (i in part.indices) {
         val a = part[i]
-        if (!allowedSymbols.containsAll(listOf(a)) && a.toDoubleOrNull() == null) return -1
+        if (!allowedSymbols.containsAll(a.toList()) && a.toDoubleOrNull() == null) return -1
         if (a.toDoubleOrNull() != null && a.toInt() > best) best = a.toInt()
     }
     return if (best != 0) best

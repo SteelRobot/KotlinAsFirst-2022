@@ -136,19 +136,19 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    val writer = File(outputName).bufferedWriter()
-    var maxLength = 0
-    for (line in File(inputName).readLines()) {
-        val newLine = line.replace("""(^ +)|(\s+${'$'})""".toRegex(), "")
-        if (newLine.length > maxLength) maxLength = newLine.length
+    File(outputName).bufferedWriter().use {
+        var maxLength = 0
+        for (line in File(inputName).readLines()) {
+            val newLine = line.replace("""(^ +)|(\s+${'$'})""".toRegex(), "")
+            if (newLine.length > maxLength) maxLength = newLine.length
+        }
+        for (line in File(inputName).readLines()) {
+            var newLine = line.replace("""(^ +)|(\s+${'$'})""".toRegex(), "")
+            newLine = " ".repeat((maxLength - newLine.length) / 2) + newLine
+            it.write(newLine)
+            it.newLine()
+        }
     }
-    for (line in File(inputName).readLines()) {
-        var newLine = line.replace("""(^ +)|(\s+${'$'})""".toRegex(), "")
-        newLine = " ".repeat((maxLength - newLine.length) / 2) + newLine
-        writer.write(newLine)
-        writer.newLine()
-    }
-    writer.close()
 }
 
 /**
@@ -318,36 +318,31 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
     fun replaceAsterisks(line: String): String =
-        line.replace("""(?<=\w)\*{3}""".toRegex(), "</b></i>")
-            .replace("""\*{3}(?=\w)""".toRegex(), "<b><i>")
-            .replace("""(?<=\w)\*{2}""".toRegex(), "</b>")
-            .replace("""\*{2}(?=\w)""".toRegex(), "<b>")
-            .replace("""(?<=\w)\*""".toRegex(), "</i>")
-            .replace("""\*(?=\w)""".toRegex(), "<i>")
-            .replace("""(?<=\w|>)~{2}""".toRegex(), "</s>")
-            .replace("""~{2}(?=\w|<)""".toRegex(), "<s>")
+        line.replace("""\*{2}((.)+?)\*{2}""".toRegex(), "<b>$1</b>")
+            .replace("""\*((.)+?)\*""".toRegex(), "<i>$1</i>")
+            .replace("""~~((.)+?)~~""".toRegex(), "<s>$1</s>")
 
-    val writer = File(outputName).bufferedWriter()
-    writer.write(
-        "<html>" +
-                "<body>" +
-                "<p>"
-    )
-    for (line in File(inputName).readLines()) {
-        if (line.matches("""(?<=^) +(?=${'$'})|""".toRegex())) {
-            writer.write(
-                "</p>" +
-                        "<p>"
-            )
+    File(outputName).bufferedWriter().use {
+        it.write(
+            "<html>" +
+                    "<body>" +
+                    "<p>"
+        )
+        for (line in File(inputName).readLines()) {
+            if (line.matches("""(?<=^) +(?=${'$'})|""".toRegex())) {
+                it.write(
+                    "</p>" +
+                            "<p>"
+                )
+            }
+            it.write(replaceAsterisks(line))
         }
-        writer.write(replaceAsterisks(line))
+        it.write(
+            "</p>" +
+                    "</body>" +
+                    "</html>"
+        )
     }
-    writer.write(
-        "</p>" +
-                "</body>" +
-                "</html>"
-    )
-    writer.close()
 }
 
 /**
